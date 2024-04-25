@@ -2,9 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
+const systemController = require('../controllers/hrSystemController');
+
 //endpoint routes of API;
 
-router.get('/trainers');
+router.get('/trainers', systemController.getTrainers);
 
 router.get('/trainers/:id');
 
