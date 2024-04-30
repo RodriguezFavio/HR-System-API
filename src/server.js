@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const hrSystemRoutes = require('./routes/hrSystemRoutes');
+const lepayaCourseRouter = require('./routes/lepayaCourses');
+const APIError = require('./middleware/error');
 
 const app = express();
 
@@ -16,14 +17,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api', hrSystemRoutes);
+app.use('/api', lepayaCourseRouter);
 
-app.use((error, req, res, next) => {
-  console.log(error);
-  const status = error.statusCode || 500;
-  const message = error.message;
-  res.status(status).json({ message });
-  next();
+app.use((err, req, res, next) => {
+  if (err instanceof APIError) {
+    res.status(err.httpStatusCode).json({ message: err.message });
+  } else {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 app.listen(8080);
