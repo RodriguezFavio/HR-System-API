@@ -1,12 +1,13 @@
-const HrSystemApi = require('../services/hrSystemService');
-const APIError = require('../middleware/error');
+const CourseService = require('../services/coursesService');
+const LearnerService = require('../services/learnersService');
+const TrainerService = require('../services/trainersService');
 
 exports.getCourses = async (req, res, next) => {
   try {
     const courseId = req.params.id;
-    const course = await HrSystemApi.getCourse(courseId);
-    const trainer = await HrSystemApi.getTrainer(course.trainerId);
-    const learners = await HrSystemApi.getLearners(course.learners);
+    const course = await CourseService.getCourse(courseId);
+    const trainer = await TrainerService.getTrainer(course.trainerId);
+    const learners = await LearnerService.getLearners(course.learners);
 
     const lepayaCourse = {
       id: course.id,
@@ -22,8 +23,8 @@ exports.getCourses = async (req, res, next) => {
       })),
     };
 
-    res.status(200).json({ message: 'Course found', lepayaCourse });
+    res.status(200).json(lepayaCourse);
   } catch (err) {
-    next(new APIError(400, 'Bad Request'));
+    next(err);
   }
 };
