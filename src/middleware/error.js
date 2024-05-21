@@ -1,10 +1,10 @@
-class APIError extends Error {
-  httpStatusCode;
-  constructor(httpStatusCode, message) {
-    super(message);
-    this.httpStatusCode = httpStatusCode;
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+const APIError = require('../utils/error');
 
-module.exports = APIError;
+exports.errorMiddleware = (err, req, res, next) => {
+  if (err instanceof APIError) {
+    res.status(err.httpStatusCode).json({ message: err.message });
+  } else {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+  next();
+};

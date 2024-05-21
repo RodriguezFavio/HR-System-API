@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const lepayaCourseRouter = require('./routes/lepayaCourses');
-const APIError = require('./middleware/error');
-
+const { errorMiddleware } = require('./middleware/error');
 const app = express();
 
 app.use(bodyParser.json());
@@ -19,12 +18,6 @@ app.use((req, res, next) => {
 
 app.use('/api', lepayaCourseRouter);
 
-app.use((err, req, res, next) => {
-  if (err instanceof APIError) {
-    res.status(err.httpStatusCode).json({ message: err.message });
-  } else {
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
+app.use(errorMiddleware);
 
 app.listen(8080);
