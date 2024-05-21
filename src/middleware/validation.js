@@ -1,5 +1,5 @@
 const { param, validationResult } = require('express-validator');
-const APIError = require('./error');
+const APIError = require('../utils/error');
 
 exports.validationId = [param('id').isUUID().withMessage('Invalid ID format')];
 
