@@ -7,7 +7,7 @@ class LearnerService {
   static async getLearners(ids) {
     const response = await axios.get(`${BASE_URL}/learners`);
     if (!response.data) {
-      throw new APIError(404, 'Resorce Not Found');
+      throw new APIError(404, 'Learners Not Found');
     }
 
     const { learners } = response.data;

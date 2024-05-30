@@ -8,7 +8,7 @@ class TrainerService {
   static async getTrainer(trainerId) {
     const response = await axios.get(`${BASE_URL}/trainers/${trainerId}`);
     if (!response.data) {
-      throw new APIError(404, 'Resorce Not Found');
+      throw new APIError(404, 'Trainer Not Found');
     }
 
     const { id, name } = response.data;

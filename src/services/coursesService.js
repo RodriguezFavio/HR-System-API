@@ -8,7 +8,7 @@ class CourseService {
   static async getCourse(courseId) {
     const response = await axios.get(`${BASE_URL}/courses/${courseId}`);
     if (!response.data) {
-      throw new APIError(404, 'Resorce Not Found');
+      throw new APIError(404, 'Course Not Found');
     }
     const { id, title, date, trainerId, learners } = response.data;
 
