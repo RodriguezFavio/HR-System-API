@@ -1,6 +1,6 @@
 const express = require('express');
 
-const systemController = require('../controllers/hrSystemController');
+const coursesController = require('../controllers/coursesController');
 const validation = require('../middleware/validation');
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get(
   '/lepaya-courses/:id',
   [validation.validationId, validation.handleValidationErrors],
-  systemController.getCourses
+  coursesController.getCourses
 );
 
 module.exports = router;
